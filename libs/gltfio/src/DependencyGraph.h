@@ -72,7 +72,12 @@ public:
     void addEdge(Material* material, const char* parameter);
 
     // This is called at the end of the initial asset loading phase.
+    // Makes a guarantee that no new material nodes or parameter nodes will be added to the graph.
     void finalize();
+
+    // This can be called after finalization to allow for dynamic addition of entities.
+    // It is much slower than finalize() because it checks the readiness of existing materials.
+    void refinalize();
 
     // These are called after textures have created and decoded.
     void addEdge(filament::Texture* texture, Material* material, const char* parameter);
@@ -93,6 +98,7 @@ private:
         size_t numReadyMaterials = 0;
     };
 
+    void checkReadiness(Material* material);
     void markAsReady(Material* material);
     TextureNode* getStatus(filament::Texture* texture);
 

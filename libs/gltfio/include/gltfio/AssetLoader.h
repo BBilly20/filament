@@ -179,6 +179,15 @@ public:
             FilamentInstance** instances, size_t numInstances);
 
     /**
+     * Adds a new instance to an instanced asset.
+     *
+     * This cannot be called after FilamentAsset::releaseSourceData().
+     * This cannot be called on a non-instanced asset.
+     * See also AssetLoader::createInstancedAsset().
+     */
+    FilamentInstance* createInstance(FilamentAsset* primary);
+
+    /**
      * Takes a pointer to an opaque pipeline object and returns a bundle of Filament objects.
      *
      * This exists solely for interop with AssetPipeline, which is optional according to the build
